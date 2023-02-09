@@ -1,24 +1,35 @@
-import React, {useState} from "react";
-import "./Modal.css";
-import { Signup } from "./Signup";
-import { Login } from "./Login";
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+import { useState } from 'react'
+import './Modal.css'
+import { useNavigate } from 'react-router'
+import { Signup } from './Signup'
+import { Login } from './Login'
 
-const Modal = ({isActive, setState}) => {
-const [auth, setAuth] = useState(true);
-    let style = {
-    display: isActive && "flex",
-}
-    return (
-<div className="modal_cont" style={style}>
-    <div className="modal">
-        <div className="modal_close" onClick={() => setState(false)}/>
-<h2>{auth ? "Войти" : "Зарегистрироваться"}</h2>
-{auth ? <Login change={setAuth}/> : <Signup change={setAuth}/>}
+export function Modal() {
+  const [modalActive, setModalActive] = useState(true)
+
+  const [auth, setAuth] = useState(true)
+
+  const navigate = useNavigate()
+
+  const close = () => {
+    setModalActive(false)
+    navigate('/home')
+  }
+
+  const style = {
+    display: modalActive && 'flex',
+  }
+  return (
+    <div className="modal_cont" style={style}>
+      <div className="modal">
+        <div className="modal_close" onClick={close} />
+        <h2>{auth ? 'Войти' : 'Зарегистрироваться'}</h2>
+        {auth
+          ? <Login setAuth={setAuth} />
+          : <Signup setAuth={setAuth} />}
+      </div>
     </div>
-</div>
-)
-}
-
-export {
-    Modal
+  )
 }

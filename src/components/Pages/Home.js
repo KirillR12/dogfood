@@ -1,16 +1,24 @@
-import { Card } from "../Card/card"
+import { Link } from 'react-router-dom'
 
-const Home = ({data}) => {
-return ( 
-    <>
-<h1>Главная страница</h1>
-      <div className="cards">
-      {data.map((el,i) => <Card key={"card" + i} text={el} like={(i + 1) % 2 === 0}/>)}
-      </div>
-      </>
-)
-}
+export function Home() {
+  const auth = localStorage.getItem('token')
 
-export {
-    Home
+  return (
+    <div>
+      <h1>Здравствуйте, вас приветствует магазин DogFood</h1>
+      {auth
+        ? (
+          <button className="btn" type="submit">
+            <Link to="/catalog">Перейти в каталог</Link>
+          </button>
+        ) : (
+          <>
+            <h2>Для просмотра каталога требуется авторизация:</h2>
+            <button className="btn" type="submit">
+              <Link to="/modal">Авторизироваться</Link>
+            </button>
+          </>
+        )}
+    </div>
+  )
 }

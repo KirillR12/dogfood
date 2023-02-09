@@ -1,27 +1,43 @@
-import React, {useState} from "react";
+/* eslint-disable react/button-has-type */
+/* eslint-disable no-self-compare */
+import { useMutation } from '@tanstack/react-query'
+import { useNavigate } from 'react-router'
+import { signIn } from '../../Api'
 
-const Login = (change) => {
-    const [inp1, setInp1] = useState("");
-    const [inp2, setInp2] = useState("");
+const SINGIN_QUERY_KEY = 'SINGIN_QUERY_KEY'
 
+export function Login({ setAuth }) {
+  const navigate = useNavigate()
 
-const sendForm = (e) => {
-    e.preventDefault();
-    const body = {
-        email: inp1,
-        password: inp2
-    }
-    console.log(body);
-}
+  const { isSuccess, mutate, data } = useMutation({
+    queryKey: [SINGIN_QUERY_KEY],
+    mutationFn: signIn,
+  })
 
-    return <form onSubmit={sendForm}>
-        <input type="email" placeholder="Введите вашу почту" value={inp1} onChange={(e) => {setInp1(e.target.value)}}/>
-        <input type="password" placeholder="Введите пароль" value={inp2} onChange={(e) => {setInp2(e.target.value)}}/>
-<button className="btn" type="submit">Войти</button>
-<button className="btn link" type="button">Зарегистрироваться</button>
+  const trySingIn = (e) => {
+    e.preventDefault()
+    mutate({
+      email: document.getElementById('login').value,
+      password: document.getElementById('password').value,
+    })
+  }
+
+  const editState = (e) => {
+    e.preventDefault()
+    setAuth((prev) => prev !== prev)
+  }
+
+  if (isSuccess) {
+    console.log('Success')
+    localStorage.setItem('token', data.token)
+    navigate('/home')
+  }
+  return (
+    <form>
+      <input id="login" type="login" placeholder="Введите вашу почту" />
+      <input id="password" type="password" placeholder="Введите пароль" />
+      <button className="btn" type="submit" onClick={trySingIn}>Войти</button>
+      <button className="btn link" type="button" onClick={editState}>Зарегистрироваться</button>
     </form>
-}
-
-export {
-    Login
+  )
 }

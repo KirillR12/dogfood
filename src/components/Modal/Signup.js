@@ -1,43 +1,46 @@
-import React, {useState} from "react";
+import { useMutation } from '@tanstack/react-query'
+import { signUp } from '../../Api'
 
-const Signup = (change) => {
-    const [inp1, setInp1] = useState("");
-    const [inp2, setInp2] = useState("");
-    const [inp3, setInp3] = useState("");
-    const [test, setTest] = useState(true);
+const SINGUP_QUERY_KEY = 'SINGUP_QUERY_KEY'
 
-    const checkPass = (val, type="main") => {
-type === "main" ? setInp2(val) : setInp3(val);
+export function Signup({ setAuth }) {
+  const {
+    isSuccess, mutate, data, isError,
+  } = useMutation({
+    queryKey: [SINGUP_QUERY_KEY],
+    mutationFn: signUp,
+  })
 
-if (val) {
-        if (type === "main") {
-    setTest(val !== inp3);
-    setInp2(val) 
-        } else {
-        setTest(val !== inp2);
-        setInp3(val)
-        }
-    }
-}
+  const trySingUp = (e) => {
+    e.preventDefault()
+    mutate({
+      email: document.getElementById('login').value,
+      password: document.getElementById('password').value,
+      group: document.getElementById('group').value,
+    })
+  }
 
-const sendForm = (e) => {
-    e.preventDefault();
-    const body = {
-        email: inp1,
-        password: inp2
-    }
-    console.log(body);
-}
-
-    return <form onSubmit={sendForm}>
-        <input type="email" placeholder="Введите вашу почту" value={inp1} onChange={(e) => {setInp1(e.target.value)}}/>
-        <input type="password" placeholder="Введите пароль" value={inp2} onChange={(e) => {checkPass(e.target.value)}}/>
-        <input type="password" placeholder="Введите пароль ещё раз" value={inp3} onChange={(e) => {checkPass(e.target.value, "secondary")}}/>
-<button className="btn" type="submit" disabled={test}>Зарегистрироваться</button>
-<button className="btn link" type="button" onClick={() => {change(prev => !prev)}}>Войти</button>
+  if (isSuccess) {
+    localStorage.setItem('token', data.token)
+  }
+  if (isError) {
+    return (
+      <form>
+        <input id="login" placeholder="Email" />
+        <input id="password" placeholder="Password" type="password" />
+        <input id="group" placeholder="Group" />
+        <button className="btn" type="submit" onClick={trySingUp}>Зарегистрироваться</button>
+        <button className="btn link" type="button" onClick={() => { setAuth((prev) => !prev) }}>Войти</button>
+      </form>
+    )
+  }
+  return (
+    <form>
+      <input id="login" type="email" placeholder="Введите вашу почту" />
+      <input id="password" type="password" placeholder="Введите пароль" />
+      <input id="group" placeholder="Group" />
+      <button className="btn" type="submit" onClick={trySingUp}>Зарегистрироваться</button>
+      <button className="btn link" type="button" onClick={() => { setAuth((prev) => !prev) }}>Войти</button>
     </form>
-}
-
-export {
-    Signup
+  )
 }
