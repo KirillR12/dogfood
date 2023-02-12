@@ -2,8 +2,8 @@
 /* eslint-disable no-underscore-dangle */
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  decrementCartAC, incrementCartAC, deleteFromCartAC, unselectCartAC, selectCartAC,
-} from '../../redux/actionCreators/cartAC'
+  cartDecrement, cartIncrement, deleteCart, cartSelect, cartUnselect,
+} from '../../redux/slices/cartSlices'
 import { Quantity } from './Quantity/Quantity'
 
 export function Button({ el }) {
@@ -13,20 +13,20 @@ export function Button({ el }) {
   const dispatch = useDispatch()
 
   const increment = () => {
-    dispatch(incrementCartAC({ id: el._id }))
+    dispatch(cartIncrement({ id: el._id }))
   }
   const decrement = () => {
-    dispatch(decrementCartAC({ id: el._id }))
+    dispatch(cartDecrement({ id: el._id }))
   }
 
   const deleteFromCart = () => {
-    dispatch(deleteFromCartAC({ id: el._id }))
+    dispatch(deleteCart({ id: el._id }))
   }
 
   const radioSelect = () => {
     if (isSelected) {
-      dispatch(unselectCartAC({ id: el._id }))
-    } else dispatch(selectCartAC({ id: el._id }))
+      dispatch(cartUnselect({ id: el._id }))
+    } else dispatch(cartSelect({ id: el._id }))
   }
 
   return (

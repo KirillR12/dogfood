@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable no-underscore-dangle */
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCartAC, deleteFromCartAC } from '../../../redux/actionCreators/cartAC'
+import { addCart, deleteCart } from '../../../redux/slices/cartSlices'
 
 export function CatalogButton({ el }) {
   const cart = useSelector((store) => store.cart)
@@ -9,7 +9,7 @@ export function CatalogButton({ el }) {
   const dispatch = useDispatch()
 
   const addToCart = () => {
-    dispatch(addToCartAC({
+    dispatch(addCart({
       id: el._id,
       count: 1,
       price:
@@ -22,7 +22,7 @@ export function CatalogButton({ el }) {
   }
 
   const deleteFromCart = () => {
-    dispatch(deleteFromCartAC({ id: el._id }))
+    dispatch(deleteCart({ id: el._id }))
   }
 
   let $cartButton = <button type="button" className="btn btn-warning" onClick={addToCart}>В корзину</button>

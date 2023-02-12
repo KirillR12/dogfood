@@ -1,16 +1,13 @@
-import { createStore } from 'redux'
-import { rootReducer } from './reducers/rootReducer'
+/* eslint-disable import/no-extraneous-dependencies */
+import { configureStore } from '@reduxjs/toolkit'
+import { cartReducer } from './slices/cartSlices'
 
-let initialValues
-if (localStorage.getItem('cart') !== null) initialValues = JSON.parse(localStorage.getItem('cart'))
-else initialValues = []
-
-const initialState = {
-  cart: initialValues,
-}
-
-export const store = createStore(rootReducer, initialState)
+export const store = configureStore({
+  reducer: {
+    cart: cartReducer,
+  },
+})
 
 store.subscribe(() => {
-  localStorage.setItem('cart', JSON.stringify(store.getState().cart))
+  localStorage.setItem('cardRT', JSON.stringify(store.getState()))
 })
