@@ -149,12 +149,4 @@ border-radius: 15px;
 margin-right: 15px;
 }
 
-.containerHome {
-  display: flex;
-  padding-top: 15px;
-}
 
-.divHome {
-  width: 200px;
-  height: 300px;
-}

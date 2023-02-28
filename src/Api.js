@@ -22,22 +22,22 @@ export const getProductsByIds = ({ queryKey }) => {
         })
 }
 
-export const signIn = (data) => fetch('https://api.react-learning.ru/signin', {
-    method: 'POST',
-    headers: {
+export const signIn = (data) => fetch('https://api.react-learning.ru/signin',{
+        method: 'POST',
+        headers: {
         'Content-Type': 'application/json; charset=utf-8'
-    },
-    body: JSON.stringify(data),
-})
-    .then((res) => {
-        if (res.status !== 200) {
+        },
+        body: JSON.stringify(data),
+    })
+    .then((res)=> {
+        if(res.status !== 200){
             return res.json().then((data) => {
                 throw new Error(data.message)
             });
         }
         return res.json();
     })
-    .then((data) => {
+    .then((data)=> {
         return data;
     })
 
@@ -55,6 +55,9 @@ export const signUp = (data) => fetch('https://api.react-learning.ru/signup', {
             });
         }
         return res.json();
+    })
+    .then((data)=> {
+        return data;
     })
 
 export const getUserInfo = () => fetch('https://api.react-learning.ru/v2/sm8/users/me', {

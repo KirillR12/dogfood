@@ -1,6 +1,0 @@
-.wrapper {
-  min-height: 50vh;
-  display: grid;
-  grid-template-rows: top auto right;
-}
-

@@ -9,14 +9,15 @@ import { ToastContainer } from 'react-toastify'
 import App from './App'
 import { store } from './redux/store'
 import { Basket } from './components/Basket/Basket'
-import { Home } from './components/Pages/Home'
-import { Modal } from './components/Modal/Modal'
-import { Profile } from './components/Pages/Profile'
+import { Home } from './components/Home/Home'
+import { Profile } from './components/Profile/Profile'
 import 'react-toastify/dist/ReactToastify.css'
 import { CreateProduct } from './components/CreateProduct/CreateProduct'
 import { DetaliProduct } from './components/DetaliProduct/DetaliProduct'
 import { Main } from './components/Main/Main'
 import { Favorite } from './components/Favourite/Favorite'
+import { SignUp } from './components/Modal/SignUp'
+import { SignIn } from './components/Modal/SignIn'
 
 const queryClient = new QueryClient()
 
@@ -39,10 +40,6 @@ const router = createBrowserRouter([
         element: <Basket />,
       },
       {
-        path: 'modal',
-        element: <Modal />,
-      },
-      {
         path: 'favorite',
         element: <Favorite />,
       },
@@ -57,6 +54,14 @@ const router = createBrowserRouter([
       {
         path: 'catalog',
         element: <Main />,
+      },
+      {
+        path: 'signup',
+        element: <SignUp />,
+      },
+      {
+        path: 'signin',
+        element: <SignIn />,
       },
     ],
   },

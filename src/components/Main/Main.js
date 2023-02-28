@@ -14,20 +14,18 @@ export function Main() {
   const sort = useSelector((store) => store.sort)
 
   const {
-    data, isSuccess,
+    data, isSuccess, isLoading,
   } = useQuery({
     queryKey: [GET_PRODUCTS_QUERY_KEY, searchString, token],
     queryFn: getProductsByWord,
   })
-
+  if (isLoading) {
+    <h3>Загрузка...</h3>
+  }
   if (isSuccess) {
     const preparedData = Sorting(data, sort)
     if (data.length === 0) {
-      return (
-        <div className={styles.notFound}>
-          <p>Ничего не найдено</p>
-        </div>
-      )
+      return <p>Ничего не найдено</p>
     }
     return (
       <>

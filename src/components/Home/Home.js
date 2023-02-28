@@ -17,9 +17,11 @@ export function Home() {
         ) : (
           <>
             <h2>Для просмотра каталога вам требуется авторизироваться:</h2>
-            <button className="btn btn-warning" type="submit">
-              <Link to="/modal">Авторизироваться</Link>
-            </button>
+            <div className={styles.btnLink}>
+              <Link className="btn btn-warning" to="/signin">Авторизироваться</Link>
+              <hr />
+              <Link className="btn btn-warning" to="/signup">Зарегистрироваться</Link>
+            </div>
           </>
         )}
       <div className={styles.containerHome}>

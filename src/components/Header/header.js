@@ -1,6 +1,6 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import styles from './styles.module.css'
@@ -11,15 +11,12 @@ export function Header() {
   const token = useSelector((store) => store.user.token)
   const cart = useSelector((store) => store.cart)
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const total = cart.length
 
-  const logOff = (e) => {
-    e.preventDefault()
+  const logOff = () => {
     dispatch(removeToken())
     dispatch(removeUserGroup())
     dispatch(removeUserID())
-    navigate('/home')
     toast('Вы успешно вышли', { type: 'error' })
   }
 
@@ -30,7 +27,9 @@ export function Header() {
         <i className="fa-solid fa-dog" />
       </Link>
       <nav className={styles.menu}>
-        {token && <Search />}
+        <div className={styles.search}>
+          {token && <Search />}
+        </div>
         <div>
           {token && (
 
@@ -58,8 +57,8 @@ export function Header() {
         )}
 
         {token && (<Link to="/profile"><h3>👤</h3></Link>)}
-        {!token && <Link to="/modal"><h3>🚪</h3></Link>}
-        {token && <Link onClick={logOff}><h3>🚪</h3></Link>}
+        {!token && <Link to="/signin"><h3>🚪</h3></Link>}
+        {token && <Link to="/home" onClick={logOff}><h3>🚪</h3></Link>}
       </nav>
     </header>
   )
